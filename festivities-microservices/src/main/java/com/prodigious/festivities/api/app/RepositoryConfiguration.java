@@ -24,9 +24,12 @@
 package com.prodigious.festivities.api.app;
 
 import com.prodigious.festivities.api.bean.Festivity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
+import org.springframework.validation.Validator;
 
 /**
  *
@@ -34,8 +37,18 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
  */
 @Configuration
 public class RepositoryConfiguration extends RepositoryRestMvcConfiguration {
+
+    @Autowired
+    private Validator validator;
+
     @Override
     protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Festivity.class);
+    }
+
+    @Override
+    protected void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
+        validatingListener.addValidator("beforeCreate", validator);
+        validatingListener.addValidator("beforeSave", validator);
     }
 }
