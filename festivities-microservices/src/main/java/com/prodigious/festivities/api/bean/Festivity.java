@@ -24,6 +24,7 @@
 package com.prodigious.festivities.api.bean;
 
 import java.util.Date;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 
 public class Festivity {
@@ -31,8 +32,10 @@ public class Festivity {
     @Id
     private String id;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String place;
     private Date start;
     private Date end;
