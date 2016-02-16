@@ -11,8 +11,6 @@ public class Festivity {
     private String name;
 
     private String place;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-//    @Temporal(TemporalType.DATE)
     private Date start;
     private Date end;
 
