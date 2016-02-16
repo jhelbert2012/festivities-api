@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 helbert rico.
+ * Copyright 2016 Pivotal Software, Inc..
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.prodigious.festivities.api.repository;
+package com.prodigious.festivities.api.app;
 
 import com.prodigious.festivities.api.bean.Festivity;
-import java.util.Date;
-import java.util.List;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
-@RepositoryRestResource(collectionResourceRel = "festivities", path = "festivities")
-public interface FestivityRepository extends MongoRepository<Festivity, String> {
-
-    List<Festivity> findByName(@Param("name") String name);
-    List<Festivity> findByPlace(@Param("place") String place);
-    List<Festivity> findByStart(@Param("start") Date start);
-    List<Festivity> findByStartBetween(@Param("start") Date start, @Param("end") Date end);
-    List<Festivity> removeByName(@Param("name") String name);
-    List<Festivity> findByStartAfter(@Param("start") Date start);
+/**
+ *
+ * @author helbert
+ */
+@Configuration
+public class RepositoryConfiguration extends RepositoryRestMvcConfiguration {
+    @Override
+    protected void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+        config.exposeIdsFor(Festivity.class);
+    }
 }
