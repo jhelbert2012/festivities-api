@@ -1,0 +1,5 @@
+com.prodigious.festivities.api.app
+com.prodigious.festivities.api.bean
+com.prodigious.festivities.api.repository
+com.prodigious.festivities.api.validator
+com.prodigious.festivities.api.validator.annotations
