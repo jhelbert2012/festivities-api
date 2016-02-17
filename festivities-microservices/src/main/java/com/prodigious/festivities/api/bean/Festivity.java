@@ -23,11 +23,17 @@
  */
 package com.prodigious.festivities.api.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.prodigious.festivities.api.validator.StartEndDateable;
+import com.prodigious.festivities.api.validator.annotations.StartBeforeEndDateValid;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 
-public class Festivity {
+@StartBeforeEndDateValid
+public class Festivity implements StartEndDateable {
 
     @Id
     private String id;
@@ -49,8 +55,6 @@ public class Festivity {
         this.start = start;
         this.end = end;
     }
-    
-    
 
     /**
      * @return the id
@@ -120,6 +124,24 @@ public class Festivity {
      */
     public void setEnd(Date end) {
         this.end = end;
+    }
+
+    @Override
+    @JsonIgnore
+    public LocalDate getStartDate() {
+        if (start == null) {
+            return null;
+        }
+        return start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    @Override
+    @JsonIgnore
+    public LocalDate getEndDate() {
+        if (end == null) {
+            return null;
+        }
+        return end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
 }
