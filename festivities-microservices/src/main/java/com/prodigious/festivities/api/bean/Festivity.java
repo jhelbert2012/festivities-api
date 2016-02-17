@@ -30,20 +30,32 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jsondoc.core.annotation.ApiObject;
+import org.jsondoc.core.annotation.ApiObjectField;
 import org.springframework.data.annotation.Id;
 
+/**
+ * Festivity java bean 
+ * @author helbert
+ */
 @StartBeforeEndDateValid
+@ApiObject
 public class Festivity implements StartEndDateable {
 
     @Id
+    @ApiObjectField(description = "The book's ID")
     private String id;
 
     @NotEmpty
+    @ApiObjectField(description = "The book's ID")
     private String name;
 
     @NotEmpty
+    @ApiObjectField(description = "The book's ID")
     private String place;
+    @ApiObjectField(description = "The book's ID")
     private Date start;
+    @ApiObjectField(description = "The book's ID")
     private Date end;
 
     public Festivity() {

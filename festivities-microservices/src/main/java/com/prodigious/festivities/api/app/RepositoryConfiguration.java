@@ -32,7 +32,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 import org.springframework.validation.Validator;
 
 /**
- *
+ * Configuration within a Java Class
  * @author helbert
  */
 @Configuration

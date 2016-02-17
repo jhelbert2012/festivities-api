@@ -26,10 +26,23 @@ package com.prodigious.festivities.api.validator;
 import java.time.LocalDate;
 
 /**
+ * Dates interface for start before end validation
  *
  * @author helbert
  */
 public interface StartEndDateable {
-   public LocalDate getStartDate();
-   public LocalDate getEndDate();
+
+    /**
+     * Return the LocalDate representing the start date.
+     *
+     * @return The start date
+     */
+    public LocalDate getStartDate();
+
+    /**
+     * Return the LocalDate representing the end date.
+     *
+     * @return The end date
+     */
+    public LocalDate getEndDate();
 }

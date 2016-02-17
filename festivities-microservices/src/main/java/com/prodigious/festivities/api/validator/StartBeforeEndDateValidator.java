@@ -29,15 +29,29 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * This is the validator class that evaluates if the start date is before or not
+ * than the end date.
  *
  * @author helbert
  */
- public class StartBeforeEndDateValidator implements ConstraintValidator<StartBeforeEndDateValid, StartEndDateable> {
+public class StartBeforeEndDateValidator implements ConstraintValidator<StartBeforeEndDateValid, StartEndDateable> {
 
+    /**
+     * Initializer
+     *
+     * @param annotation annotation working with this validator
+     */
     @Override
     public void initialize(StartBeforeEndDateValid annotation) {
     }
 
+    /**
+     * Evaluate if the end date is after start date
+     *
+     * @param bean bean containing the dates for validation
+     * @param context context
+     * @return true is is valid, false if not.
+     */
     @Override
     public boolean isValid(StartEndDateable bean, ConstraintValidatorContext context) {
         final LocalDate startDate = bean.getStartDate();
