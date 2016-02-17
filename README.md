@@ -1,6 +1,7 @@
 # festivities-api
 
-This REST API has been created following HATEOAS pattern and its architecture is based on Spring Boot,
+This REST API has been created following HATEOAS pattern, that means it should be self documented and you can navigate the entire API 
+from http://localhost:8080/festivities Also its architecture is based on Spring Boot,
 Spring Data and Spring Data Rest over a MongoDB repository.
 
 # Configuration and Setup
