@@ -32,8 +32,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import com.prodigious.festivities.api.repository.FestivityRepository;
+import java.util.TimeZone;
+import org.springframework.context.annotation.Bean;
+import springfox.documentation.builders.ApiInfoBuilder;
+import static springfox.documentation.builders.PathSelectors.regex;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
+@EnableSwagger2
 @EnableAutoConfiguration
 @EnableMongoRepositories(basePackages = "com.prodigious.festivities.api.repository")
 @SpringBootApplication
@@ -43,9 +52,32 @@ public class Application implements CommandLineRunner {
     private FestivityRepository festivityRepository;
 
     public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         SpringApplication springApplication = new SpringApplication(Application.class);
         springApplication.addListeners(new ApplicationPidFileWriter());
         springApplication.run(args);
+    }
+
+    @Bean
+    public Docket newsApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("greetings")
+                .apiInfo(apiInfo())
+                .select()
+                .paths(regex("/greeting.*"))
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Spring REST Sample with Swagger")
+                .description("Spring REST Sample with Swagger")
+                .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
+                .contact("Niklas Heidloff")
+                .license("Apache License Version 2.0")
+                .licenseUrl("https://github.com/IBM-Bluemix/news-aggregator/blob/master/LICENSE")
+                .version("2.0")
+                .build();
     }
 
     public void run(String... strings) throws Exception {
