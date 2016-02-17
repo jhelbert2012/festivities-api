@@ -23,7 +23,6 @@
  */
 package com.prodigious.festivities.api.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.system.ApplicationPidFileWriter;
@@ -31,25 +30,19 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import com.prodigious.festivities.api.repository.FestivityRepository;
 import java.util.TimeZone;
-import org.springframework.context.annotation.Bean;
-import springfox.documentation.builders.ApiInfoBuilder;
-import static springfox.documentation.builders.PathSelectors.regex;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.jsondoc.spring.boot.starter.EnableJSONDoc;
 
+/**
+ * Main class of application
+ * @author helbert
+ */
 @Configuration
-@EnableSwagger2
+@EnableJSONDoc
 @EnableAutoConfiguration
 @EnableMongoRepositories(basePackages = "com.prodigious.festivities.api.repository")
 @SpringBootApplication
 public class Application implements CommandLineRunner {
-
-    @Autowired
-    private FestivityRepository festivityRepository;
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
@@ -58,28 +51,7 @@ public class Application implements CommandLineRunner {
         springApplication.run(args);
     }
 
-    @Bean
-    public Docket newsApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("greetings")
-                .apiInfo(apiInfo())
-                .select()
-                .paths(regex("/greeting.*"))
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Spring REST Sample with Swagger")
-                .description("Spring REST Sample with Swagger")
-                .termsOfServiceUrl("http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm?Open")
-                .contact("Niklas Heidloff")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://github.com/IBM-Bluemix/news-aggregator/blob/master/LICENSE")
-                .version("2.0")
-                .build();
-    }
-
+    @Override
     public void run(String... strings) throws Exception {
     }
 

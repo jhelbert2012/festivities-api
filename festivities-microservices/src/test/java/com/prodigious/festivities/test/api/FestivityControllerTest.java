@@ -48,6 +48,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Integration Test for the REST API
  *
  * @author helbert
  */
@@ -57,16 +58,28 @@ import static org.junit.Assert.assertEquals;
 @IntegrationTest("server.port:0")
 public class FestivityControllerTest {
 
+    /**
+     * Reference to the repository
+     */
     @Autowired
     FestivityRepository repository;
 
+    /**
+     * Mockup data
+     */
     Festivity helbertFestivity;
     Festivity sofiaFestivity;
     Festivity momFestivity;
 
+    /**
+     * Local server port
+     */
     @Value("${local.server.port}")
     int port;
 
+    /**
+     * mockup initializer
+     */
     @Before
     public void setUp() {
 
@@ -78,15 +91,17 @@ public class FestivityControllerTest {
         repository.removeByName(momFestivity.getName());
         repository.save(helbertFestivity);
         repository.save(Arrays.asList(helbertFestivity, sofiaFestivity, momFestivity));
-//        
         RestAssured.port = port;
     }
 
+    /**
+     * Evaluate if REST API supports the new festivities creation.
+     */
     @Test
     public void canAddNewFestivitie() {
 
         given().
-                body("{ \"name\" : \"" + momFestivity.getName() + "\", \"place\" : \"" + momFestivity.getPlace() + "\"}").
+                body("{ \"name\" : \"" + momFestivity.getName() + "\", \"place\" : \"" + momFestivity.getPlace() + "\", \"start\" : \"2010-01-01\", \"end\" : \"2012-01-01\"}").
                 with().
                 contentType(JSON).
                 then().
@@ -96,6 +111,9 @@ public class FestivityControllerTest {
                 post("/festivities");
     }
 
+    /**
+     * Evaluate if the REST API can retrieve all the festivities.
+     */
     @Test
     public void canFetchAll() {
         when().
@@ -105,6 +123,9 @@ public class FestivityControllerTest {
                 body("_embedded.festivities.name", Matchers.hasItems("Craig's recognition", "Edna's event", "Clarence's event"));
     }
 
+    /**
+     * Evaluate the findByName REST service
+     */
     @Test
     public void canFindByName() {
         when().
@@ -114,6 +135,9 @@ public class FestivityControllerTest {
                 body("_embedded.festivities.name", Matchers.hasItem("Clarence's event"));
     }
 
+    /**
+     * Evaluate find by range dates
+     */
     @Test
     public void canFindByDates() {
         when().
@@ -123,6 +147,9 @@ public class FestivityControllerTest {
                 body("_embedded.festivities.size()", equalTo(6));
     }
 
+    /**
+     * Test if the API support delete mockup data 
+     */
     @Test
     public void canDeleteHelbert() {
         Response res = get("/festivities/search/findByName?name={name}", "Helbert's amazing days");

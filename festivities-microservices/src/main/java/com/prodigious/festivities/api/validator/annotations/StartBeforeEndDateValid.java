@@ -35,6 +35,8 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
+ * Annotation for Java Bean Validations JSR 303. 
+ * Evaluate if the start date is before than end date.
  *
  * @author helbert
  */
@@ -44,9 +46,21 @@ import javax.validation.Payload;
 @Documented
 public @interface StartBeforeEndDateValid {
 
+    /**
+     * Message when the validation fails.
+     * @return 
+     */
     String message() default "{com.prodigious.validation.startdateshouldbegreaterthanenddate}";
 
+    /**
+     * Groups applied for the annotation.
+     * @return Groups applied for the annotation.
+     */
     Class<?>[] groups() default {};
 
+    /**
+     * Payload for the annotation
+     * @return Payload for the annotation
+     */
     Class<? extends Payload>[] payload() default {};
 }
