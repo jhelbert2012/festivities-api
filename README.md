@@ -1,4 +1,4 @@
-# festivities-api
+# Festivities REST API
 
 This REST API has been created following HATEOAS pattern, that means it should be self documented and you can navigate the entire API 
 from http://localhost:8080/festivities Also its architecture is based on Spring Boot,
@@ -6,13 +6,24 @@ Spring Data and Spring Data Rest over a MongoDB repository.
 
 # Configuration and Setup
 
+For setup your local environment please follow steps bellow:
+
+1. Execute git clone https://github.com/jhelbert2012/festivities-api.git
+2. Go to the festivities-api folder.
+3. Import data with: mongoimport --db festivities --collection festivity --drop --file resources/json/festivities.json
+3. Execute cd festivities-microservices.
+4. Execute mvn clean install
+5. Download and install Mongo following https://www.mongodb.org/downloads
+6. Execute mongod
+7. Execute mvn spring-boot:run
+
+That's it.
+
+Now you can access http://localhost:8080/ and start navigating the Festivities API from here.
+
 ## ETL Extract, Transform and Load 
 
 The provided XML was transformed to JSON using a online tool: http://www.utilities-online.info/xmltojson/#.VsP4yZMrLGI
-
-For importing that data inside the database first install MongoDB in your local then run:
-
-mongoimport --db festivities --collection festivity --drop --file festivities-api/resources/json/festivities.json
 
 ## REST Services
 
@@ -65,5 +76,5 @@ the REST API. For this you can run:
 
 mvn -Dtest=com.prodigious.festivities.test.api.FestivityControllerTest surefire:test
 
-Or as simple as mvn clean build
+Or as easy as mvn clean build
 
